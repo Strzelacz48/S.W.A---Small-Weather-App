@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "small-weather-app"
+version = "0.1.0"
+description = "Contact management app with weather integration (Django)"
+authors = ["Marcin Czapulak <marc.czapulak@gmail.com>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^6.0.7"
+djangorestframework = "^3.17.1"
+django-environ = "^0.14.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
