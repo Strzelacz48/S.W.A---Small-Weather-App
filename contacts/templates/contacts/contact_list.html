@@ -3,5 +3,48 @@
 {% block title %}Contacts{% endblock %}
 
 {% block content %}
-<p class="text-gray-600">Skeleton is working — contact list will go here.</p>
+{% with header_style="px-4 py-2 text-left text-sm font-semibold text-gray-700" cell_style="px-4 py-2 text-sm text-gray-900" cell_muted_style="px-4 py-2 text-sm text-gray-600" %}
+<div class="overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="{{ header_style }}">
+                    <a href="?sort={{ last_name_sort_link }}" class="hover:underline">
+                        Last name
+                        {% if current_sort == "last_name" %}&#9650;{% elif current_sort == "-last_name" %}&#9660;{% endif %}
+                    </a>
+                </th>
+                <th class="{{ header_style }}">First name</th>
+                <th class="{{ header_style }}">Phone</th>
+                <th class="{{ header_style }}">Email</th>
+                <th class="{{ header_style }}">City</th>
+                <th class="{{ header_style }}">Status</th>
+                <th class="{{ header_style }}">
+                    <a href="?sort={{ created_at_sort_link }}" class="hover:underline">
+                        Added
+                        {% if current_sort == "created_at" %}&#9650;{% elif current_sort == "-created_at" %}&#9660;{% endif %}
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+            {% for contact in contacts %}
+            <tr class="hover:bg-gray-50">
+                <td class="{{ cell_style }}">{{ contact.last_name }}</td>
+                <td class="{{ cell_style }}">{{ contact.first_name }}</td>
+                <td class="{{ cell_muted_style }}">{{ contact.phone }}</td>
+                <td class="{{ cell_muted_style }}">{{ contact.email }}</td>
+                <td class="{{ cell_muted_style }}">{{ contact.city }}</td>
+                <td class="{{ cell_muted_style }}">{{ contact.status.name }}</td>
+                <td class="{{ cell_muted_style }}">{{ contact.created_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="px-4 py-6 text-center text-sm text-gray-500">No contacts yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endwith %}
 {% endblock %}
