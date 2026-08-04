@@ -11,7 +11,7 @@
         <h1 class="text-xl font-semibold">Contacts Manager</h1>
     </header>
 
-    <main class="max-w-5xl mx-auto p-6">
+    <main class="{% block container_class %}max-w-5xl{% endblock %} mx-auto p-6">
         {% block content %}{% endblock %}
     </main>
 </body>

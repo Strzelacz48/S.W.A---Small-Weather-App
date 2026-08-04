@@ -20,3 +20,10 @@ class ContactForm(forms.ModelForm):
             "city": forms.TextInput(attrs={"class": TAILWIND_INPUT_CLASSES}),
             "status": forms.Select(attrs={"class": TAILWIND_INPUT_CLASSES}),
         }
+
+
+class ContactImportForm(forms.Form):
+    csv_file = forms.FileField(
+        label="CSV file",
+        widget=forms.FileInput(attrs={"class": TAILWIND_INPUT_CLASSES, "accept": ".csv"}),
+    )

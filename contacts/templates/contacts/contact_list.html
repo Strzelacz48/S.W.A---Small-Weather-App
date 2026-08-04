@@ -2,10 +2,17 @@
 {% load static %}
 
 {% block title %}Contacts{% endblock %}
+{% block container_class %}max-w-7xl{% endblock %}
 
 {% block content %}
 {% with header_style="px-4 py-2 text-left text-sm font-semibold text-gray-700" cell_style="px-4 py-2 text-sm text-gray-900" cell_muted_style="px-4 py-2 text-sm text-gray-600" %}
-<div class="flex justify-end mb-4">
+<div class="flex justify-end gap-2 mb-4">
+    <a href="{% url 'contacts:export' %}?sort={{ current_sort }}" class="bg-gray-600 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-700">
+        Export CSV
+    </a>
+    <a href="{% url 'contacts:import' %}" class="bg-gray-600 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-700">
+        Import CSV
+    </a>
     <a href="{% url 'contacts:add' %}" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
         Add Contact
     </a>
@@ -49,13 +56,18 @@
                 <td class="{{ cell_muted_style }}">{{ contact.status.name }}</td>
                 <td class="{{ cell_muted_style }}">{{ contact.created_at|date:"Y-m-d H:i" }}</td>
                 <td class="{{ cell_muted_style }}">
-                    <a href="{% url 'contacts:edit' contact.pk %}" class="text-blue-600 hover:underline">Edit</a>
-                    <button type="button"
-                            class="delete-trigger text-red-600 hover:underline ml-2"
-                            data-delete-url="{% url 'contacts:delete' contact.pk %}"
-                            data-contact-name="{{ contact.first_name }} {{ contact.last_name }}">
-                        Delete
-                    </button>
+                    <div class="flex gap-2">
+                        <a href="{% url 'contacts:edit' contact.pk %}"
+                           class="bg-blue-600 text-white px-3 py-1 rounded-md text-xs hover:bg-blue-700">
+                            Edit
+                        </a>
+                        <button type="button"
+                                class="delete-trigger bg-red-600 text-white px-3 py-1 rounded-md text-xs hover:bg-red-700"
+                                data-delete-url="{% url 'contacts:delete' contact.pk %}"
+                                data-contact-name="{{ contact.first_name }} {{ contact.last_name }}">
+                            Delete
+                        </button>
+                    </div>
                 </td>
             </tr>
             {% empty %}

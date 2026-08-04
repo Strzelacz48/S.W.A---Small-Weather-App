@@ -10,4 +10,6 @@ urlpatterns = [
     path("<int:pk>/edit/", views.ContactUpdateView.as_view(), name="edit"),
     path("<int:pk>/delete/", views.contact_delete, name="delete"),
     path("weather/", views.contact_weather, name="weather"),
+    path("import/", views.contact_import, name="import"),
+    path("export/", views.contact_export, name="export"),
 ]
