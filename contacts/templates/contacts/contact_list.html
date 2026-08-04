@@ -4,6 +4,11 @@
 
 {% block content %}
 {% with header_style="px-4 py-2 text-left text-sm font-semibold text-gray-700" cell_style="px-4 py-2 text-sm text-gray-900" cell_muted_style="px-4 py-2 text-sm text-gray-600" %}
+<div class="flex justify-end mb-4">
+    <a href="{% url 'contacts:add' %}" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+        Add Contact
+    </a>
+</div>
 <div class="overflow-x-auto bg-white rounded-lg shadow">
     <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-100">
@@ -25,6 +30,7 @@
                         {% if current_sort == "created_at" %}&#9650;{% elif current_sort == "-created_at" %}&#9660;{% endif %}
                     </a>
                 </th>
+                <th class="{{ header_style }}">Actions</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
@@ -37,10 +43,13 @@
                 <td class="{{ cell_muted_style }}">{{ contact.city }}</td>
                 <td class="{{ cell_muted_style }}">{{ contact.status.name }}</td>
                 <td class="{{ cell_muted_style }}">{{ contact.created_at|date:"Y-m-d H:i" }}</td>
+                <td class="{{ cell_muted_style }}">
+                    <a href="{% url 'contacts:edit' contact.pk %}" class="text-blue-600 hover:underline">Edit</a>
+                </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="7" class="px-4 py-6 text-center text-sm text-gray-500">No contacts yet.</td>
+                <td colspan="8" class="px-4 py-6 text-center text-sm text-gray-500">No contacts yet.</td>
             </tr>
             {% endfor %}
         </tbody>
