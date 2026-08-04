@@ -29,3 +29,15 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class CityCoordinate(models.Model):
+    """Geocoding result for a city name, so we only ever call Nominatim once per city."""
+
+    name = models.CharField(max_length=100, unique=True)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    fetched_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

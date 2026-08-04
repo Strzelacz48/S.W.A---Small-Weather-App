@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Import Contacts{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-lg shadow p-6">
+    <h2 class="text-lg font-semibold mb-2">Import Contacts from CSV</h2>
+    <p class="text-sm text-gray-600 mb-4">
+        The CSV must have these columns: <code>first_name, last_name, phone, email, city, status</code>.
+        <code>status</code> must match an existing status name (e.g. "New", "In Progress", "Lost", "Outdated").
+    </p>
+
+    <form method="post" enctype="multipart/form-data" class="mb-6">
+        {% csrf_token %}
+        {{ form.csv_file }}
+        {% for error in form.csv_file.errors %}
+        <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+        {% endfor %}
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 mt-3">
+            Upload
+        </button>
+    </form>
+
+    {% if results %}
+        {% if results.error %}
+        <p class="text-sm text-red-600">{{ results.error }}</p>
+        {% else %}
+        <p class="text-sm text-green-700 mb-2">
+            Imported {{ results.imported }} contact{{ results.imported|pluralize }}.
+        </p>
+        {% if results.skipped %}
+        <p class="text-sm text-gray-700 mb-1">
+            Skipped {{ results.skipped|length }} row{{ results.skipped|length|pluralize }}:
+        </p>
+        <ul class="text-sm text-red-600 list-disc list-inside">
+            {% for row_number, reason in results.skipped %}
+            <li>Row {{ row_number }}: {{ reason }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endif %}
+    {% endif %}
+
+    <a href="{% url 'contacts:list' %}" class="inline-block mt-4 text-blue-600 hover:underline">Back to contacts</a>
+</div>
+{% endblock %}

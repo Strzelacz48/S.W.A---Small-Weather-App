@@ -88,6 +88,18 @@ DATABASES = {
 }
 
 
+# Cache
+# https://docs.djangoproject.com/en/6.0/topics/cache/
+# In-process memory cache, used to avoid re-hitting the Nominatim/Open-Meteo
+# APIs on every page load (see contacts/weather.py).
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
+
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
