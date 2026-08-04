@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, UpdateView
 
 from .forms import ContactForm
@@ -42,3 +43,10 @@ class ContactUpdateView(UpdateView):
     form_class = ContactForm
     template_name = "contacts/contact_form.html"
     success_url = reverse_lazy("contacts:list")
+
+
+@require_POST
+def contact_delete(request, pk):
+    contact = get_object_or_404(Contact, pk=pk)
+    contact.delete()
+    return redirect("contacts:list")
