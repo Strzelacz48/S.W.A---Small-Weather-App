@@ -1,10 +1,12 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_GET, require_POST
 from django.views.generic import CreateView, UpdateView
 
 from .forms import ContactForm
 from .models import Contact
+from .weather import get_weather_for_city
 
 ALLOWED_SORT_FIELDS = {"last_name", "-last_name", "created_at", "-created_at"}
 DEFAULT_SORT = "-created_at"
@@ -50,3 +52,16 @@ def contact_delete(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     contact.delete()
     return redirect("contacts:list")
+
+
+@require_GET
+def contact_weather(request):
+    city = request.GET.get("city", "").strip()
+    if not city:
+        return JsonResponse({"error": "city query param is required"}, status=400)
+
+    weather = get_weather_for_city(city)
+    if weather is None:
+        return JsonResponse({"error": "weather unavailable for this city"}, status=502)
+
+    return JsonResponse(weather)

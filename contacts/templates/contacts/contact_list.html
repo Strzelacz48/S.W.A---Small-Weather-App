@@ -24,6 +24,7 @@
                 <th class="{{ header_style }}">Phone</th>
                 <th class="{{ header_style }}">Email</th>
                 <th class="{{ header_style }}">City</th>
+                <th class="{{ header_style }}">Weather</th>
                 <th class="{{ header_style }}">Status</th>
                 <th class="{{ header_style }}">
                     <a href="?sort={{ created_at_sort_link }}" class="hover:underline">
@@ -42,6 +43,9 @@
                 <td class="{{ cell_muted_style }}">{{ contact.phone }}</td>
                 <td class="{{ cell_muted_style }}">{{ contact.email }}</td>
                 <td class="{{ cell_muted_style }}">{{ contact.city }}</td>
+                <td class="{{ cell_muted_style }}" data-weather-city="{{ contact.city }}">
+                    <span class="text-gray-400">Loading&hellip;</span>
+                </td>
                 <td class="{{ cell_muted_style }}">{{ contact.status.name }}</td>
                 <td class="{{ cell_muted_style }}">{{ contact.created_at|date:"Y-m-d H:i" }}</td>
                 <td class="{{ cell_muted_style }}">
@@ -56,7 +60,7 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="8" class="px-4 py-6 text-center text-sm text-gray-500">No contacts yet.</td>
+                <td colspan="9" class="px-4 py-6 text-center text-sm text-gray-500">No contacts yet.</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -85,4 +89,5 @@
 {% endwith %}
 
 <script src="{% static 'contacts/js/delete_modal.js' %}"></script>
+<script src="{% static 'contacts/js/weather.js' %}"></script>
 {% endblock %}
