@@ -11,6 +11,8 @@ from .forms import ContactForm, ContactImportForm
 from .models import Contact, ContactStatusChoices
 from .weather import get_weather_for_city
 
+# Shared by both contact_export (header row) and _import_contacts_from_csv 
+# so a file exported from this app always re-imports cleanly.
 CSV_COLUMNS = ("first_name", "last_name", "phone", "email", "city", "status")
 REQUIRED_CSV_COLUMNS = set(CSV_COLUMNS)
 
