@@ -7,7 +7,7 @@
 
 {% block content %}
 {% with header_style="px-4 py-2 text-left text-sm font-semibold text-gray-700" cell_style="px-4 py-2 text-sm text-gray-900" cell_muted_style="px-4 py-2 text-sm text-gray-600" %}
-<div class="flex justify-end gap-2 mb-4">
+<div class="flex flex-wrap justify-end gap-2 mb-4">
     <a href="{% url 'contacts:export' %}?sort={{ current_sort }}" class="flex items-center gap-1 bg-gray-600 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-700">
         {% icon "database-export" %}
         Export CSV
@@ -85,7 +85,7 @@
     </table>
 </div>
 
-<div id="delete-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+<div id="delete-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
     <div class="bg-white rounded-lg shadow p-6 max-w-sm w-full">
         <h3 class="text-lg font-semibold mb-2">Delete contact</h3>
         <p class="text-sm text-gray-600 mb-4">
